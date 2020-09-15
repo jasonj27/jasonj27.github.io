@@ -1,0 +1,244 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>如何在Rails裡使用Webpack? - Jason's Blog</title><meta name=Description content="Jason's Blog"><meta property="og:title" content="如何在Rails裡使用Webpack?"><meta property="og:description" content="簡單，但是有些小地方要注意&mldr;"><meta property="og:type" content="article"><meta property="og:url" content="https://jasonj27.github.io/2020/09/15/how-to-use-webpack-with-rails/"><meta property="og:image" content="https://jasonj27.github.io/logo.png"><meta property="article:published_time" content="2020-09-15T23:00:53+08:00"><meta property="article:modified_time" content="2020-09-15T23:00:53+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jasonj27.github.io/logo.png"><meta name=twitter:title content="如何在Rails裡使用Webpack?"><meta name=twitter:description content="簡單，但是有些小地方要注意&mldr;"><meta name=application-name content="Jason's Blog"><meta name=apple-mobile-web-app-title content="Jason's Blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jasonj27.github.io/2020/09/15/how-to-use-webpack-with-rails/><link rel=prev href=https://jasonj27.github.io/2020/09/09/shell-script-for-update-grub.cfg-and-more/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"如何在Rails裡使用Webpack?","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jasonj27.github.io\/2020\/09\/15\/how-to-use-webpack-with-rails\/"},"genre":"posts","keywords":"Rails, Webpack, Webpacker","wordcount":2752,"url":"https:\/\/jasonj27.github.io\/2020\/09\/15\/how-to-use-webpack-with-rails\/","datePublished":"2020-09-15T23:00:53+08:00","dateModified":"2020-09-15T23:00:53+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"Jason Jiang","logo":"https:\/\/jasonj27.github.io\/logo.png"},"author":{"@type":"Person","name":"Jason Jiang"},"description":""}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Jason's Blog"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/logo.png data-srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" data-sizes=auto alt=/logo.png title=/logo.png>Jason's Blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><a class=menu-item href=https://github.com/jasonj27 title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw"></i></a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=Search id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Jason's Blog"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/logo.png data-srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" data-sizes=auto alt=/logo.png title=/logo.png>Jason's Blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=Search id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/>Posts</a><a class=menu-item href=/tags/>Tags</a><a class=menu-item href=/categories/>Categories</a><a class=menu-item href=https://github.com/jasonj27 title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw"></i></a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">如何在Rails裡使用Webpack?</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jason Jiang</a></span>&nbsp;<span class=post-category>included in <a href=/categories/rails/><i class="far fa-folder fa-fw"></i>Rails</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-09-15>2020-09-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2752 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#webpack--webpacker>Webpack & Webpacker</a></li><li><a href=#建立專案>建立專案</a></li><li><a href=#升級webpacker>升級Webpacker</a></li><li><a href=#安裝與設定bootsrap>安裝與設定Bootsrap</a></li><li><a href=#webpack打包css和js邏輯>Webpack打包CSS和JS邏輯</a></li><li><a href=#production環境會遇到的問題>Production環境會遇到的問題</a><ul><li><a href=#assetsprecompile>assets:precompile</a></li><li><a href=#rails_serve_static_files>RAILS_SERVE_STATIC_FILES</a></li></ul></li><li><a href=#webpack-dev-server>webpack-dev-server</a></li></ul></nav></div></div><div class=content id=content><p>簡單，但是有些小地方要注意&mldr;</p><p>最近在寫一些練習的小專案，沒想到在設定Webpacker這個步驟卡了很久</p><p>所以打算把設定的步驟自己寫下來避免下次又忘了</p><h2 id=webpack--webpacker>Webpack & Webpacker</h2><p><a href=https://webpack.js.org/ target=_blank rel="noopener noreffer">Webpack</a>是一個靜態模組打包工具，幫你把有複雜依賴關係的js, css, scss&mldr;打包成靜態的檔案</p><p><a href=https://github.com/rails/webpacker target=_blank rel="noopener noreffer">Webpacker</a>是一個Ruby gem，讓我們在Rails可以方便的使用Webpack處理Webpack可以處理的檔案</p><p>以下範例再建立一個Rails專案後，建立一個controller和一個view，並且設定Webpacker引用Bootstrap的CSS和JS到view裡</p><h2 id=建立專案>建立專案</h2><ul><li><p>Ruby的版本是2.7.1</p></li><li><p>Rails的版本是6.0.3.3</p></li></ul><ol><li>首先輸入以下命令開新專案</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>rails new webpack_example
+</code></pre></td></tr></table></div></div><ol start=2><li>接下來generate只有一個action的controller，記得先cd進去</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>❯ rails g controller page index
+Running via Spring preloader in process <span class=m>50838</span>
+      create  app/controllers/page_controller.rb
+       route  get <span class=s1>&#39;page/index&#39;</span>
+      invoke  erb
+      create    app/views/page
+      create    app/views/page/index.html.erb
+      invoke  test_unit
+      create    test/controllers/page_controller_test.rb
+      invoke  helper
+      create    app/helpers/page_helper.rb
+      invoke    test_unit
+      invoke  assets
+      invoke    scss
+      create      app/assets/stylesheets/page.scss
+</code></pre></td></tr></table></div></div><ol start=3><li>打開config/routes.rb改成以下內容</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-ruby data-lang=ruby><span class=no>Rails</span><span class=o>.</span><span class=n>application</span><span class=o>.</span><span class=n>routes</span><span class=o>.</span><span class=n>draw</span> <span class=k>do</span>
+  <span class=n>root</span> <span class=s1>&#39;page#index&#39;</span>
+<span class=k>end</span>
+</code></pre></td></tr></table></div></div><ol start=4><li>打開app/views/page/index.html.erb貼上以下<a href=https://getbootstrap.com/docs/4.0/components/navbar/#supported-content target=_blank rel="noopener noreffer">Bootstrap Navbar</a>的範例code</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>nav</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;navbar navbar-expand-lg navbar-light bg-light&#34;</span><span class=p>&gt;</span>
+  <span class=p>&lt;</span><span class=nt>a</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;navbar-brand&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span>Navbar<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+  <span class=p>&lt;</span><span class=nt>button</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;navbar-toggler&#34;</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;button&#34;</span> <span class=na>data-toggle</span><span class=o>=</span><span class=s>&#34;collapse&#34;</span> <span class=na>data-target</span><span class=o>=</span><span class=s>&#34;#navbarSupportedContent&#34;</span> <span class=na>aria-controls</span><span class=o>=</span><span class=s>&#34;navbarSupportedContent&#34;</span> <span class=na>aria-expanded</span><span class=o>=</span><span class=s>&#34;false&#34;</span> <span class=na>aria-label</span><span class=o>=</span><span class=s>&#34;Toggle navigation&#34;</span><span class=p>&gt;</span>
+    <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;navbar-toggler-icon&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+  <span class=p>&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+
+  <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;collapse navbar-collapse&#34;</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;navbarSupportedContent&#34;</span><span class=p>&gt;</span>
+    <span class=p>&lt;</span><span class=nt>ul</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;navbar-nav mr-auto&#34;</span><span class=p>&gt;</span>
+      <span class=p>&lt;</span><span class=nt>li</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;nav-item active&#34;</span><span class=p>&gt;</span>
+        <span class=p>&lt;</span><span class=nt>a</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;nav-link&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span>Home <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;sr-only&#34;</span><span class=p>&gt;</span>(current)<span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+      <span class=p>&lt;/</span><span class=nt>li</span><span class=p>&gt;</span>
+      <span class=p>&lt;</span><span class=nt>li</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;nav-item&#34;</span><span class=p>&gt;</span>
+        <span class=p>&lt;</span><span class=nt>a</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;nav-link&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span>Link<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+      <span class=p>&lt;/</span><span class=nt>li</span><span class=p>&gt;</span>
+      <span class=p>&lt;</span><span class=nt>li</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;nav-item dropdown&#34;</span><span class=p>&gt;</span>
+        <span class=p>&lt;</span><span class=nt>a</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;nav-link dropdown-toggle&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;navbarDropdown&#34;</span> <span class=na>role</span><span class=o>=</span><span class=s>&#34;button&#34;</span> <span class=na>data-toggle</span><span class=o>=</span><span class=s>&#34;dropdown&#34;</span> <span class=na>aria-haspopup</span><span class=o>=</span><span class=s>&#34;true&#34;</span> <span class=na>aria-expanded</span><span class=o>=</span><span class=s>&#34;false&#34;</span><span class=p>&gt;</span>
+          Dropdown
+        <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+        <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;dropdown-menu&#34;</span> <span class=na>aria-labelledby</span><span class=o>=</span><span class=s>&#34;navbarDropdown&#34;</span><span class=p>&gt;</span>
+          <span class=p>&lt;</span><span class=nt>a</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;dropdown-item&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span>Action<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+          <span class=p>&lt;</span><span class=nt>a</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;dropdown-item&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span>Another action<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+          <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;dropdown-divider&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+          <span class=p>&lt;</span><span class=nt>a</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;dropdown-item&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span>Something else here<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+      <span class=p>&lt;/</span><span class=nt>li</span><span class=p>&gt;</span>
+      <span class=p>&lt;</span><span class=nt>li</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;nav-item&#34;</span><span class=p>&gt;</span>
+        <span class=p>&lt;</span><span class=nt>a</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;nav-link disabled&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span>Disabled<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+      <span class=p>&lt;/</span><span class=nt>li</span><span class=p>&gt;</span>
+    <span class=p>&lt;/</span><span class=nt>ul</span><span class=p>&gt;</span>
+    <span class=p>&lt;</span><span class=nt>form</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;form-inline my-2 my-lg-0&#34;</span><span class=p>&gt;</span>
+      <span class=p>&lt;</span><span class=nt>input</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;form-control mr-sm-2&#34;</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;search&#34;</span> <span class=na>placeholder</span><span class=o>=</span><span class=s>&#34;Search&#34;</span> <span class=na>aria-label</span><span class=o>=</span><span class=s>&#34;Search&#34;</span><span class=p>&gt;</span>
+      <span class=p>&lt;</span><span class=nt>button</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;btn btn-outline-success my-2 my-sm-0&#34;</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;submit&#34;</span><span class=p>&gt;</span>Search<span class=p>&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+    <span class=p>&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
+  <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+<span class=p>&lt;/</span><span class=nt>nav</span><span class=p>&gt;</span>
+</code></pre></td></tr></table></div></div><ol start=5><li>最後輸入以下命令啟動Rails伺服器後，打開瀏覽器輸入網址<code>http://localhost:3000/</code>就可以看到沒有JS也沒有CSS的Navbar了</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>rails s
+</code></pre></td></tr></table></div></div><h2 id=升級webpacker>升級Webpacker</h2><p>目前Rails使用的Webpacker還是4.3版，目前已經有V5的版本可以使用</p><p>打開專案的Gemfile，把Webpacker的版本改為以下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-ruby data-lang=ruby><span class=n>gem</span> <span class=s1>&#39;webpacker&#39;</span><span class=p>,</span> <span class=s1>&#39;~&gt; 5.2&#39;</span><span class=p>,</span> <span class=s1>&#39;&gt;= 5.2.1&#39;</span>
+</code></pre></td></tr></table></div></div><p>改完之後記得執行<code>bundle</code>套用版本升級</p><p>接下來執行<code>yarn upgrade @rails/webpacker --latest</code>命令升級node module裡的檔案。也可以使用<code>yarn upgrade @rails/webpacker@5.2.1</code>指定版本升級，但是這兩個目前是一樣的</p><blockquote><p><a href=https://github.com/rails/webpacker/tree/5-x-stable#upgrading target=_blank rel="noopener noreffer">Webpacker Git上升級的說明</a></p></blockquote><h2 id=安裝與設定bootsrap>安裝與設定Bootsrap</h2><ol><li><p>執行<code>yarn add bootstrap jquery popper.js</code>從yarnpkg安裝Boorstrap和Bootstrap裡JS所依賴的jQuery, popper.js</p></li><li><p>接下來要利用<a href=https://webpack.js.org/plugins/provide-plugin/ target=_blank rel="noopener noreffer">Webpack的ProvidePlugin功能</a>把jQuery, popper.js自動載入到各個JS裡，就不用在JS檔裡寫<code>import $ from 'jquery'</code></p><p>打開config/webpack/environment.js，改成以下內容</p><ul><li><code>$: 'jquery/src/jquery'</code>的寫法可以在rails-ujs中也能使用jQuery</li></ul></li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-js data-lang=js><span class=kr>const</span> <span class=p>{</span> <span class=nx>environment</span> <span class=p>}</span> <span class=o>=</span> <span class=nx>require</span><span class=p>(</span><span class=s1>&#39;@rails/webpacker&#39;</span><span class=p>)</span>
+
+<span class=kr>const</span> <span class=nx>webpack</span> <span class=o>=</span> <span class=nx>require</span><span class=p>(</span><span class=s1>&#39;webpack&#39;</span><span class=p>)</span>
+<span class=nx>environment</span><span class=p>.</span><span class=nx>plugins</span><span class=p>.</span><span class=nx>prepend</span><span class=p>(</span><span class=s1>&#39;Provide&#39;</span><span class=p>,</span>
+  <span class=k>new</span> <span class=nx>webpack</span><span class=p>.</span><span class=nx>ProvidePlugin</span><span class=p>({</span>
+    <span class=nx>$</span><span class=o>:</span> <span class=s1>&#39;jquery/src/jquery&#39;</span><span class=p>,</span>
+    <span class=nx>jQuery</span><span class=o>:</span> <span class=s1>&#39;jquery/src/jquery&#39;</span><span class=p>,</span>
+    <span class=nx>Popper</span><span class=o>:</span> <span class=p>[</span><span class=s1>&#39;popper.js&#39;</span><span class=p>,</span> <span class=s1>&#39;default&#39;</span><span class=p>]</span>
+  <span class=p>})</span>
+<span class=p>)</span>
+
+<span class=nx>module</span><span class=p>.</span><span class=nx>exports</span> <span class=o>=</span> <span class=nx>environment</span>
+</code></pre></td></tr></table></div></div><ol start=3><li>打開app/javascript/packs/application.js，加入以下程式碼</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-js data-lang=js><span class=kr>import</span> <span class=s1>&#39;bootstrap&#39;</span>
+<span class=kr>import</span> <span class=s1>&#39;bootstrap/scss/bootstrap.scss&#39;</span>
+</code></pre></td></tr></table></div></div><ol start=4><li>打開app/views/layouts/application.html.erb，把<code>&lt;%= stylesheet_link_tag 'application', ... %></code>那行改成以下</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-ruby data-lang=ruby><span class=o>&lt;%=</span> <span class=n>stylesheet_pack_tag</span> <span class=s1>&#39;application&#39;</span><span class=p>,</span> <span class=ss>media</span><span class=p>:</span> <span class=s1>&#39;all&#39;</span><span class=p>,</span> <span class=s1>&#39;data-turbolinks-track&#39;</span><span class=p>:</span> <span class=s1>&#39;reload&#39;</span> <span class=o>%&gt;</span>
+</code></pre></td></tr></table></div></div><ol start=5><li>最後再執行<code>rails s</code>，就可以在瀏覽器看到精美的Bootstrap Navbar🎉</li></ol><h2 id=webpack打包css和js邏輯>Webpack打包CSS和JS邏輯</h2><p>在Webpacker設定下，Webpack打包時會進行以下步驟</p><ol><li><p>到app/javascript/packs尋找JS或SCSS檔案，作為<a href=https://webpack.js.org/concepts/#entry target=_blank rel="noopener noreffer">entry point</a>，並依據JS檔裡面的<code>import 'libary'</code>或SCSS檔裡面的<code>@import 'style.scss';</code>建立各檔案間的依賴性</p><ul><li><p>除了在JS裡import JS，你也可以在JS import SCSS, CSS</p></li><li><p>import檔案時，從資料夾名稱開始寫的話，會從node_module資料夾中開始找</p></li><li><p>另外Webpack V5的新功能<a href=https://github.com/rails/webpacker/blob/5-x-stable/docs/css.md#importing-css-as-a-multi-file-pack-webpacker-v5 target=_blank rel="noopener noreffer">Importing CSS as a multi-file pack</a>，可以直接在packs資料夾建立同名的JS和SCSS檔不會有問題</p></li></ul></li><li><p>依據entry point的檔名，打包出同名的JS檔或CSS檔。SCSS檔打包出CSS檔，JS檔打包出JS和CSS檔（如果有import CSS或SCSS）</p></li><li><p>使用時，在html.erb使用<code>&lt;%= stylesheet_pack_tag 'entry_point' %></code>載入打包後的CSS檔，使用<code>&lt;%= javascript_pack_tag 'entry_point' %></code>載入打包後的JS檔</p><ul><li>如果在entry point同時引用JS和SCSS檔，記得要分別載入CSS和JS(stylesheet_pack_tag & javascript_pack_tag)</li></ul></li></ol><h2 id=production環境會遇到的問題>Production環境會遇到的問題</h2><p>讓我們用<code>rails s -e=production</code>命令啟動production環境的伺服器。然後網站就出錯了</p><h3 id=assetsprecompile>assets:precompile</h3><p>打開log/production.log會看到以下錯誤訊息</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>ActionView::Template::Error (Webpacker can&#39;t find application.css in /home/jasonj/webpack_example/public/packs/manifest.json. Possible causes:
+1. You want to set webpacker.yml value of compile to true for your environment
+   unless you are using the `webpack -w` or the webpack-dev-server.
+2. webpack has not yet re-run to reflect updates.
+3. You have misconfigured Webpacker&#39;s config/webpacker.yml file.
+4. Your webpack configuration is not creating a manifest.
+Your manifest contains:
+{
+  &#34;application.js&#34;: &#34;/packs/js/application-9317054a6fa2affa21c0.js&#34;,
+  &#34;application.js.map&#34;: &#34;/packs/js/application-9317054a6fa2affa21c0.js.map&#34;,
+  &#34;entrypoints&#34;: {
+    &#34;application&#34;: {
+      &#34;js&#34;: [
+        &#34;/packs/js/application-9317054a6fa2affa21c0.js&#34;
+      ],
+      &#34;js.map&#34;: [
+        &#34;/packs/js/application-9317054a6fa2affa21c0.js.map&#34;
+      ]
+    }
+  }
+}
+):
+[3ac03c58-2f45-46f3-8997-611527716d59]      5:     &lt;%= csrf_meta_tags %&gt;
+[3ac03c58-2f45-46f3-8997-611527716d59]      6:     &lt;%= csp_meta_tag %&gt;
+[3ac03c58-2f45-46f3-8997-611527716d59]      7: 
+[3ac03c58-2f45-46f3-8997-611527716d59]      8:     &lt;%= stylesheet_pack_tag &#39;application&#39;, media: &#39;all&#39;, &#39;data-turbolinks-track&#39;: &#39;reload&#39; %&gt;
+[3ac03c58-2f45-46f3-8997-611527716d59]      9:     &lt;%= javascript_pack_tag &#39;application&#39;, &#39;data-turbolinks-track&#39;: &#39;reload&#39; %&gt;
+[3ac03c58-2f45-46f3-8997-611527716d59]     10:   &lt;/head&gt;
+[3ac03c58-2f45-46f3-8997-611527716d59]     11: 
+[3ac03c58-2f45-46f3-8997-611527716d59]   
+[3ac03c58-2f45-46f3-8997-611527716d59] app/views/layouts/application.html.erb:8
+I,
+</code></pre></td></tr></table></div></div><p>簡單來說，就是在erb檔用了<code>stylesheet_pack_tag</code>和<code>javascript_pack_tag</code>，但是webpacker說找不到打包出來到CSS和JS檔</p><p>要產生production環境用的CSS和JS檔，需要先執行以下命令</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=nv>RAILS_ENV</span><span class=o>=</span>production rails assets:precompile
+</code></pre></td></tr></table></div></div><p>之後檢查public/packs/css和public/packs/js裡，就會有打包出來的檔案</p><p>在部署的時候，應該執行<code>rails assets:precompile</code>就好，<code>RAILS_ENV=production</code>應該會先設定在伺服器的環境變數中</p><blockquote><p><a href=https://devcenter.heroku.com/articles/getting-started-with-rails6#deploy-your-application-to-heroku target=_blank rel="noopener noreffer">部署在Heroku的話，應該會自動執行這一步的樣子</a></p></blockquote><h3 id=rails_serve_static_files>RAILS_SERVE_STATIC_FILES</h3><p>接下來再打開伺服器，怎麼又變成沒有引用CSS和JS的畫面了？</p><p>讓我們打開log看看</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[2020-09-16T02:02:18.644064 #9016]  INFO -- : [87560b92-483f-43e3-a8eb-3089cb8fca12] Started GET &#34;/packs/css/application-c6751772.css&#34; for 127.0.0.1 at 2020-09-16 02:02:18 +0800
+F, 
+[2020-09-16T02:02:18.644927 #9016] FATAL -- : [87560b92-483f-43e3-a8eb-3089cb8fca12]   
+[87560b92-483f-43e3-a8eb-3089cb8fca12] ActionController::RoutingError (No route matches [GET] &#34;/packs/css/application-c6751772.css&#34;):
+...
+...
+...
+[2020-09-16T02:02:18.667339 #9016]  INFO -- : [ef022040-9dd8-424b-beb7-ebaed172e8d0] Started GET &#34;/packs/js/application-473b44d61307cd2ab54d.js&#34; for 127.0.0.1 at 2020-09-16 02:02:18 +0800
+F, 
+[2020-09-16T02:02:18.668101 #9016] FATAL -- : [ef022040-9dd8-424b-beb7-ebaed172e8d0]   
+[ef022040-9dd8-424b-beb7-ebaed172e8d0] ActionController::RoutingError (No route matches [GET] &#34;/packs/js/application-473b44d61307cd2ab54d.js&#34;):
+</code></pre></td></tr></table></div></div><p>原來是瀏覽器要求CSS和JS時，被Rails擋下來了</p><p>在config/environments/production.rb中</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-ruby data-lang=ruby><span class=c1># Disable serving static files from the `/public` folder by default since</span>
+<span class=c1># Apache or NGINX already handles this.</span>
+<span class=n>config</span><span class=o>.</span><span class=n>public_file_server</span><span class=o>.</span><span class=n>enabled</span> <span class=o>=</span> <span class=no>ENV</span><span class=o>[</span><span class=s1>&#39;RAILS_SERVE_STATIC_FILES&#39;</span><span class=o>].</span><span class=n>present?</span>
+</code></pre></td></tr></table></div></div><p>一般部署Rails時，會搭配<a href=https://httpd.apache.org/ target=_blank rel="noopener noreffer">Apache</a>或<a href=https://www.nginx.com/ target=_blank rel="noopener noreffer">NGINX</a>使用，處理public資料夾裡的靜態檔案</p><p>所以如果沒有使用以上軟體，要使用以下命令啟動伺服器，</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=nv>RAILS_SERVE_STATIC_FILES</span><span class=o>=</span><span class=nb>true</span> rails s -e<span class=o>=</span>production
+</code></pre></td></tr></table></div></div><p>在部署時，要把<code>RAILS_SERVE_STATIC_FILES=true</code>加入環境變數中</p><p><strong>部署在Heroku時需要設定這個環境變數</strong></p><h2 id=webpack-dev-server>webpack-dev-server</h2><blockquote><p><a href=https://kaochenlong.com/2019/11/21/webpacker-with-rails-part-1/ target=_blank rel="noopener noreffer">請領班幫忙</a></p></blockquote><p>開發時，同時執行webpack-dev-server，可以加快CSS或JS檔重新載入的速度</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-09-15</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://jasonj27.github.io/2020/09/15/how-to-use-webpack-with-rails/ data-title=如何在Rails裡使用Webpack? data-hashtags="Rails, Webpack, Webpacker"><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://jasonj27.github.io/2020/09/15/how-to-use-webpack-with-rails/ data-hashtag="Rails, Webpack, Webpacker"><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://jasonj27.github.io/2020/09/15/how-to-use-webpack-with-rails/ data-title=如何在Rails裡使用Webpack?><i class="fab fa-hacker-news fa-fw"></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://jasonj27.github.io/2020/09/15/how-to-use-webpack-with-rails/ data-title=如何在Rails裡使用Webpack?><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/rails-webpack-webpacker/>Rails, Webpack, Webpacker</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/2020/09/09/shell-script-for-update-grub.cfg-and-more/ class=prev rel=prev title="更新雙重開機(Windows, Linux)設定的shell script"><i class="fas fa-angle-left fa-fw"></i>更新雙重開機(Windows, Linux)設定的shell script</a></div></div><div id=comments><div id=disqus_thread class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://disqus.com/?ref_noscript>Disqus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jason Jiang</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css><script type=text/javascript src=https://jasonj27.disqus.com/embed.js defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"Learn more","message":"這個網站會使用 Cookie 來分析流量及評估廣告成效。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"algoliaAppID":"CD4M1YRABE","algoliaIndex":"blog","algoliaSearchKey":"3000b6bf014d231055874ddfd193dd56","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-176305956-1');</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-176305956-1" async></script></body></html>
