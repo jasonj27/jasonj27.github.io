@@ -1,9 +1,6 @@
 # 在Rails專案設定Travis-CI或Github action
 
 <!--more-->
-
-# 在Rails專案設定Travis-CI或Github action
-
 ## 什麼是CI？
 > [偷偷用一下Gitlab CI/CD的文件](https://docs.gitlab.com/ee/ci/README.html)
 ~~結束~~
