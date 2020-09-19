@@ -1,6 +1,6 @@
 # 在Rails專案設定Travis-CI或Github action
 
-<!-- more -->
+<!--more-->
 
 # 在Rails專案設定Travis-CI或Github action
 
