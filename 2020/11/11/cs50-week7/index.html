@@ -1,0 +1,188 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>CS50 2020 Week7: SQL Problem Answers - Jason's Blog</title><meta name=Description content="Jason's Blog"><meta property="og:title" content="CS50 2020 Week7: SQL Problem Answers"><meta property="og:description" content><meta property="og:type" content="article"><meta property="og:url" content="https://jasonj27.github.io/2020/11/11/cs50-week7/"><meta property="og:image" content="https://jasonj27.github.io/logo.png"><meta property="article:published_time" content="2020-11-11T14:17:54+08:00"><meta property="article:modified_time" content="2020-11-11T14:17:54+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jasonj27.github.io/logo.png"><meta name=twitter:title content="CS50 2020 Week7: SQL Problem Answers"><meta name=twitter:description content><meta name=application-name content="Jason's Blog"><meta name=apple-mobile-web-app-title content="Jason's Blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jasonj27.github.io/2020/11/11/cs50-week7/><link rel=prev href=https://jasonj27.github.io/2020/11/09/cs50-week6/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"CS50 2020 Week7: SQL Problem Answers","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jasonj27.github.io\/2020\/11\/11\/cs50-week7\/"},"genre":"posts","keywords":"SQL, CS50","wordcount":434,"url":"https:\/\/jasonj27.github.io\/2020\/11\/11\/cs50-week7\/","datePublished":"2020-11-11T14:17:54+08:00","dateModified":"2020-11-11T14:17:54+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"Jason Jiang","logo":"https:\/\/jasonj27.github.io\/logo.png"},"author":{"@type":"Person","name":"Jason Jiang"},"description":""}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Jason's Blog"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/logo.png data-srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" data-sizes=auto alt=/logo.png title=/logo.png>Jason's Blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><a class=menu-item href=https://github.com/jasonj27 title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw"></i></a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=Search id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Jason's Blog"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/logo.png data-srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" data-sizes=auto alt=/logo.png title=/logo.png>Jason's Blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=Search id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/>Posts</a><a class=menu-item href=/tags/>Tags</a><a class=menu-item href=/categories/>Categories</a><a class=menu-item href=https://github.com/jasonj27 title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw"></i></a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">CS50 2020 Week7: SQL Problem Answers</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jason Jiang</a></span>&nbsp;<span class=post-category>included in <a href=/categories/cs50/><i class="far fa-folder fa-fw"></i>CS50</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-11-11>2020-11-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;434 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#movieshttpscs50harvardedux2020psets7movies><a href=https://cs50.harvard.edu/x/2020/psets/7/movies>Movies</a></a><ul><li><a href=#1sql>1.sql</a></li><li><a href=#2sql>2.sql</a></li><li><a href=#3sql>3.sql</a></li><li><a href=#4sql>4.sql</a></li><li><a href=#5sql>5.sql</a></li><li><a href=#6sql>6.sql</a></li><li><a href=#7sql>7.sql</a></li><li><a href=#8sql>8.sql</a></li><li><a href=#9sql>9.sql</a></li><li><a href=#10sql>10.sql</a></li><li><a href=#11sql>11.sql</a></li><li><a href=#12sql>12.sql</a></li><li><a href=#13sql>13.sql</a></li></ul></li></ul></nav></div></div><div class=content id=content><p>Click title to detail page</p><h2 id=movieshttpscs50harvardedux2020psets7movies><a href=https://cs50.harvard.edu/x/2020/psets/7/movies target=_blank rel="noopener noreffer">Movies</a></h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=c1>--schema
+</span><span class=c1></span><span class=k>CREATE</span> <span class=k>TABLE</span> <span class=n>movies</span> <span class=p>(</span>
+                    <span class=n>id</span> <span class=nb>INTEGER</span><span class=p>,</span>
+                    <span class=n>title</span> <span class=nb>TEXT</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                    <span class=k>year</span> <span class=nb>NUMERIC</span><span class=p>,</span>
+                    <span class=k>PRIMARY</span> <span class=k>KEY</span><span class=p>(</span><span class=n>id</span><span class=p>)</span>
+                <span class=p>);</span>
+<span class=k>CREATE</span> <span class=k>TABLE</span> <span class=n>stars</span> <span class=p>(</span>
+                <span class=n>movie_id</span> <span class=nb>INTEGER</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                <span class=n>person_id</span> <span class=nb>INTEGER</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                <span class=k>FOREIGN</span> <span class=k>KEY</span><span class=p>(</span><span class=n>movie_id</span><span class=p>)</span> <span class=k>REFERENCES</span> <span class=n>movies</span><span class=p>(</span><span class=n>id</span><span class=p>),</span>
+                <span class=k>FOREIGN</span> <span class=k>KEY</span><span class=p>(</span><span class=n>person_id</span><span class=p>)</span> <span class=k>REFERENCES</span> <span class=n>people</span><span class=p>(</span><span class=n>id</span><span class=p>)</span>
+            <span class=p>);</span>
+<span class=k>CREATE</span> <span class=k>TABLE</span> <span class=n>directors</span> <span class=p>(</span>
+                <span class=n>movie_id</span> <span class=nb>INTEGER</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                <span class=n>person_id</span> <span class=nb>INTEGER</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                <span class=k>FOREIGN</span> <span class=k>KEY</span><span class=p>(</span><span class=n>movie_id</span><span class=p>)</span> <span class=k>REFERENCES</span> <span class=n>movies</span><span class=p>(</span><span class=n>id</span><span class=p>),</span>
+                <span class=k>FOREIGN</span> <span class=k>KEY</span><span class=p>(</span><span class=n>person_id</span><span class=p>)</span> <span class=k>REFERENCES</span> <span class=n>people</span><span class=p>(</span><span class=n>id</span><span class=p>)</span>
+            <span class=p>);</span>
+<span class=k>CREATE</span> <span class=k>TABLE</span> <span class=n>ratings</span> <span class=p>(</span>
+                <span class=n>movie_id</span> <span class=nb>INTEGER</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                <span class=n>rating</span> <span class=nb>REAL</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                <span class=n>votes</span> <span class=nb>INTEGER</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                <span class=k>FOREIGN</span> <span class=k>KEY</span><span class=p>(</span><span class=n>movie_id</span><span class=p>)</span> <span class=k>REFERENCES</span> <span class=n>movies</span><span class=p>(</span><span class=n>id</span><span class=p>)</span>
+            <span class=p>);</span>
+<span class=k>CREATE</span> <span class=k>TABLE</span> <span class=n>people</span> <span class=p>(</span>
+                <span class=n>id</span> <span class=nb>INTEGER</span><span class=p>,</span>
+                <span class=n>name</span> <span class=nb>TEXT</span> <span class=k>NOT</span> <span class=k>NULL</span><span class=p>,</span>
+                <span class=n>birth</span> <span class=nb>NUMERIC</span><span class=p>,</span>
+                <span class=k>PRIMARY</span> <span class=k>KEY</span><span class=p>(</span><span class=n>id</span><span class=p>)</span>
+            <span class=p>);</span>
+</code></pre></td></tr></table></div></div><h3 id=1sql>1.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>title</span> <span class=k>from</span> <span class=n>movies</span> <span class=k>where</span> <span class=k>year</span><span class=o>=</span><span class=mi>2008</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=2sql>2.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>birth</span> <span class=k>from</span> <span class=n>people</span> <span class=k>where</span> <span class=n>name</span><span class=o>=</span><span class=s2>&#34;Emma Stone&#34;</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=3sql>3.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>title</span> <span class=k>from</span> <span class=n>movies</span> <span class=k>where</span> <span class=k>year</span> <span class=o>&gt;=</span> <span class=mi>2018</span> <span class=k>order</span> <span class=k>by</span> <span class=n>title</span> <span class=k>asc</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=4sql>4.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=k>count</span><span class=p>(</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span><span class=p>)</span> <span class=k>from</span> <span class=n>movies</span> 
+<span class=k>join</span> <span class=n>ratings</span> <span class=k>on</span> <span class=n>movies</span><span class=p>.</span><span class=n>id</span><span class=o>=</span><span class=n>ratings</span><span class=p>.</span><span class=n>movie_id</span> 
+<span class=k>and</span> <span class=n>ratings</span><span class=p>.</span><span class=n>rating</span><span class=o>=</span><span class=mi>10</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=5sql>5.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>title</span><span class=p>,</span> <span class=k>year</span> <span class=k>from</span> <span class=n>movies</span> 
+<span class=k>where</span> <span class=n>title</span> <span class=k>like</span> <span class=s1>&#39;Harry Potter%&#39;</span> 
+<span class=k>order</span> <span class=k>by</span> <span class=k>year</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=6sql>6.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=k>avg</span><span class=p>(</span><span class=n>rating</span><span class=p>)</span> <span class=k>from</span> <span class=n>ratings</span> 
+<span class=k>join</span> <span class=n>movies</span> <span class=k>on</span> <span class=n>movies</span><span class=p>.</span><span class=n>id</span><span class=o>=</span><span class=n>ratings</span><span class=p>.</span><span class=n>movie_id</span> 
+<span class=k>where</span> <span class=n>movies</span><span class=p>.</span><span class=k>year</span><span class=o>=</span><span class=mi>2012</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=7sql>7.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>ratings</span><span class=p>.</span><span class=n>rating</span><span class=p>,</span> <span class=n>movies</span><span class=p>.</span><span class=n>title</span>
+<span class=k>from</span> <span class=n>movies</span>
+<span class=k>join</span> <span class=n>ratings</span> <span class=k>on</span> <span class=n>movies</span><span class=p>.</span><span class=n>id</span><span class=o>=</span><span class=n>ratings</span><span class=p>.</span><span class=n>movie_id</span>
+<span class=k>where</span> <span class=n>movies</span><span class=p>.</span><span class=k>year</span><span class=o>=</span><span class=mi>2010</span>
+<span class=k>order</span> <span class=k>by</span> <span class=n>ratings</span><span class=p>.</span><span class=n>rating</span> <span class=k>desc</span><span class=p>,</span>
+<span class=n>movies</span><span class=p>.</span><span class=n>title</span> <span class=k>asc</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=8sql>8.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>name</span> <span class=k>from</span> <span class=n>people</span> 
+<span class=k>join</span> <span class=n>stars</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>person_id</span><span class=o>=</span><span class=n>people</span><span class=p>.</span><span class=n>id</span> 
+<span class=k>join</span> <span class=n>movies</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span> 
+<span class=k>where</span> <span class=n>movies</span><span class=p>.</span><span class=n>title</span><span class=o>=</span><span class=s2>&#34;Toy Story&#34;</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=9sql>9.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=k>distinct</span> <span class=n>name</span> <span class=k>from</span> <span class=n>people</span>
+<span class=k>join</span> <span class=n>stars</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>person_id</span><span class=o>=</span><span class=n>people</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>movies</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>ratings</span> <span class=k>on</span> <span class=n>ratings</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>where</span> <span class=n>movies</span><span class=p>.</span><span class=k>year</span><span class=o>=</span><span class=mi>2004</span>
+<span class=k>order</span> <span class=k>by</span> <span class=n>people</span><span class=p>.</span><span class=n>birth</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=10sql>10.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>name</span> <span class=k>from</span> <span class=n>people</span>
+<span class=k>join</span> <span class=n>directors</span> <span class=k>on</span> <span class=n>directors</span><span class=p>.</span><span class=n>person_id</span><span class=o>=</span><span class=n>people</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>movies</span> <span class=k>on</span> <span class=n>directors</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>ratings</span> <span class=k>on</span> <span class=n>ratings</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>where</span> <span class=n>ratings</span><span class=p>.</span><span class=n>rating</span> <span class=o>&gt;=</span> <span class=mi>9</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=11sql>11.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>movies</span><span class=p>.</span><span class=n>title</span> <span class=k>from</span> <span class=n>movies</span>
+<span class=k>join</span> <span class=n>stars</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>people</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>person_id</span><span class=o>=</span><span class=n>people</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>ratings</span> <span class=k>on</span> <span class=n>ratings</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>where</span> <span class=n>people</span><span class=p>.</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;Chadwick Boseman&#34;</span>
+<span class=k>order</span> <span class=k>by</span> <span class=n>ratings</span><span class=p>.</span><span class=n>rating</span> <span class=k>desc</span>
+<span class=k>limit</span> <span class=mi>5</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div><h3 id=12sql>12.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>title</span> <span class=k>from</span> <span class=n>movies</span>
+<span class=k>join</span> <span class=n>stars</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>people</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>person_id</span><span class=o>=</span><span class=n>people</span><span class=p>.</span><span class=n>id</span>
+<span class=k>where</span> <span class=n>people</span><span class=p>.</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;Johnny Depp&#34;</span>
+<span class=k>and</span> <span class=n>title</span> <span class=k>in</span> <span class=p>(</span>
+<span class=k>select</span> <span class=n>title</span> <span class=k>from</span> <span class=n>movies</span>
+<span class=k>join</span> <span class=n>stars</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>people</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>person_id</span><span class=o>=</span><span class=n>people</span><span class=p>.</span><span class=n>id</span>
+<span class=k>where</span> <span class=n>people</span><span class=p>.</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;Helena Bonham Carter&#34;</span>
+<span class=p>);</span>
+</code></pre></td></tr></table></div></div><h3 id=13sql>13.sql</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sql data-lang=sql><span class=k>select</span> <span class=n>name</span> <span class=k>from</span> <span class=n>people</span>
+<span class=k>join</span> <span class=n>stars</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>person_id</span><span class=o>=</span><span class=n>people</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>movies</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>where</span> <span class=n>movies</span><span class=p>.</span><span class=n>id</span> <span class=k>in</span>
+<span class=p>(</span><span class=k>select</span> <span class=n>movies</span><span class=p>.</span><span class=n>id</span> <span class=k>from</span> <span class=n>movies</span>
+<span class=k>join</span> <span class=n>people</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>person_id</span><span class=o>=</span><span class=n>people</span><span class=p>.</span><span class=n>id</span>
+<span class=k>join</span> <span class=n>stars</span> <span class=k>on</span> <span class=n>stars</span><span class=p>.</span><span class=n>movie_id</span><span class=o>=</span><span class=n>movies</span><span class=p>.</span><span class=n>id</span>
+<span class=k>where</span> <span class=n>people</span><span class=p>.</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;Kevin Bacon&#34;</span>
+<span class=k>and</span> <span class=n>people</span><span class=p>.</span><span class=n>birth</span><span class=o>=</span><span class=mi>1958</span><span class=p>)</span>
+<span class=k>and</span> <span class=n>people</span><span class=p>.</span><span class=n>name</span> <span class=o>!=</span> <span class=s2>&#34;Kevin Bacon&#34;</span><span class=p>;</span>
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-11-11</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://jasonj27.github.io/2020/11/11/cs50-week7/ data-title="CS50 2020 Week7: SQL Problem Answers" data-hashtags=SQL,CS50><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://jasonj27.github.io/2020/11/11/cs50-week7/ data-hashtag=SQL><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://jasonj27.github.io/2020/11/11/cs50-week7/ data-title="CS50 2020 Week7: SQL Problem Answers"><i class="fab fa-hacker-news fa-fw"></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://jasonj27.github.io/2020/11/11/cs50-week7/ data-title="CS50 2020 Week7: SQL Problem Answers"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/sql/>SQL</a>,&nbsp;<a href=/tags/cs50/>CS50</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/2020/11/09/cs50-week6/ class=prev rel=prev title="CS50 2020 Week6: Python Problem Answers"><i class="fas fa-angle-left fa-fw"></i>CS50 2020 Week6: Python Problem Answers</a></div></div><div id=comments><div id=disqus_thread class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://disqus.com/?ref_noscript>Disqus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.78.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jason Jiang</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css><script type=text/javascript src=https://jasonj27.disqus.com/embed.js defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"Learn more","message":"這個網站會使用 Cookie 來分析流量及評估廣告成效。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"algoliaAppID":"CD4M1YRABE","algoliaIndex":"blog","algoliaSearchKey":"3000b6bf014d231055874ddfd193dd56","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type=text/javascript src=/js/theme.min.js></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-176305956-1','auto');ga('send','pageview');</script></body></html>
